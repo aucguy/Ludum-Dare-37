@@ -1,5 +1,5 @@
 base.registerModule('app', function() {
-  var util = base.importModule('util');
+  var play = base.importModule('play');
   
   var setup = {
     preinit: function preinit(main) {
@@ -14,7 +14,7 @@ base.registerModule('app', function() {
      */
     getStates: function getStates(main) {
         return {
-            test: new TestState()
+            play: new play.PlayState()
         }
     },
     /**
@@ -24,12 +24,6 @@ base.registerModule('app', function() {
       main.game.state.start('test');
     }
   };
-  
-  var TestState = util.extend(Object, 'TestState', {
-    create: function create() {
-      this.game.add.sprite(50, 50, 'image/test');
-    }
-  });
   
   return {
     setup: setup

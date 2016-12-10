@@ -91,7 +91,6 @@ base.registerModule('util', function() {
     });
   }
   contextAttr.__factoryAttr__ = true;
-
   
   var Contextual = extend(Object, 'Contextual', {
     constructor: function Contextual() {
