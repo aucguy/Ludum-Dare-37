@@ -1,6 +1,7 @@
 #show the player the character's profession and basic operation.
 #also demonstrate what this language can do
-label start: 
+label start:
+  test (call (+ foo "hello"))
   fork:
     animation "<guy 1>" "walkIn"
   animation "<guy 2>" "walkIn"
@@ -80,7 +81,3 @@ label yourGfDead:
   dialog "bff" "This wasn't the best of places to tell you this, but I thought I should have told you as soon as possible."
   dialog "bff" "I'm sorry"
   goto <something else>
-
-func goToFloor floor lb message:
-  animation "elevator" "goToFloor" floor
-  option lb message

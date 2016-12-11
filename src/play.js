@@ -12,8 +12,12 @@ base.registerModule('play', function() {
       this.program = null;
       this.actors = {};
       this.state = this;
-    }
+    },
     create: function create() {
+      var program = sbl.compile(base.getAsset('state/test'));
+      program.run();
+    },
+    create_: function create_() {
       this.program = sbl.compile(base.getAsset('state/storys'));
       this.program.linkForeign(sblCallbacks(this))
       this.program.run();
@@ -39,13 +43,13 @@ base.registerModule('play', function() {
     }
   });
   
-  var Actor = util.extendPlayContextual, 'Actor', {
+  var Actor = util.extend(PlayContextual, 'Actor', {
     constructor: function Actor() {
       this.sprite = null; //TODO
     }
   });
   
-  function sblCallbacks(state)
+  function sblCallbacks(state) {
     return {
       dialog: function dialog(person, message) {
         //display dialog gui
@@ -61,7 +65,7 @@ base.registerModule('play', function() {
         } else {
           throw(state.program.throwExc("label is invalid"))
         }
-      }
+      },
       animation: function animation(spriteName, animation) {
         //play the animation
       },
@@ -72,5 +76,6 @@ base.registerModule('play', function() {
   }
   
   return {
+    PlayState: PlayState
   };
 });

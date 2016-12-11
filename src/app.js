@@ -21,7 +21,7 @@ base.registerModule('app', function() {
      * initialize the application
      */
     initApp: function initApp(main) {
-      main.game.state.start('test');
+      main.game.state.start('play');
     }
   };
   

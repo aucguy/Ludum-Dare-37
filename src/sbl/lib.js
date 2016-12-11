@@ -1,16 +1,20 @@
-base.registerModule('lib', function() {
+base.registerModule('sbl.lib', function() {
+  var interpreter = base.importModule('sbl.interpreter');
+  
   var stdForeign = {
-    label: function label() {
-      //TODO
+    print: function print(branch, x) {
+      console.log(x)
     },
-    func: function func() {
-      //TODO
+    label: function label(branch, name, block) {
+      branch.program.vars[name] = block;
+    }
+    "goto": function goTo(branch, block) {
+      branch.instruction = block.start;
     },
-    goTo; function goTo() {
-      //TODO
-    },
-    fork: function fork() {
-      //TODO
+    fork: function fork(branch, block) {
+      var nb = new interpreter.Branch(branch.program);
+      nb.instruction = block.start;
+      nb.program.branches.push(nb);
     }
   };
   

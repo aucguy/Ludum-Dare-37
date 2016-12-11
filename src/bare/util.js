@@ -24,6 +24,13 @@ base.registerModule('util', function() {
     }
     var proto = Object.create(parents[0].prototype);
     var names, name, value, i;
+    
+    for (i = parents.length-1; i >= 0; i--) {
+      if(parents[i].__name__) {
+         proto["is$" + parents[i].__name__] = true;
+      }
+    }
+    
     // copying parent attributes
     for (i = parents.length-1; i >= 0; i--) {
       var parent = parents[i];
@@ -41,7 +48,8 @@ base.registerModule('util', function() {
     }
 
     proto.__name__ = className; // needed for child classes
-
+    proto["is$" + className] = true;
+    
     names = Object.getOwnPropertyNames(sub);
 
     for (i=0; i<names.length; i++) { // copying new attributes
@@ -356,6 +364,57 @@ base.registerModule('util', function() {
       return new Phaser.Point(-this.sprite.position.x + viewport.texture.width / 2,
         -this.sprite.position.y + viewport.texture.height / 2);
     }
+  });
+  
+  function peek(x) {
+    return x[x.length - 1];
+  }
+  
+  var ExtendableUint8Array = extend(Object, ExtendableUint8Array, {
+    constructor: function ExtendableUint8Array() {
+      this.partSize = 1024;
+      this.current = new Uint8Array(this.partSize);
+      this.index = 0;
+      this.filled = [];
+    },
+    appendByte: function appendByte(x) {
+      if(this.index >= this.current.length) {
+        this.filled.push(this.current);
+        this.current = new Uint8Array(this.partSize);
+      }
+      this.current[this.index++] = x;
+    },
+    appendShort: function appendShort(x) {
+      this.appendByte(x >> 8);
+      this.appendByte(x & 255);
+    },
+    setByte: function setByte(i, x) {
+      var filledSize = this.filled.length * this.partSize;
+      if(i < filledSize){
+        this.filled[Math.floor(i / this.partSize)][i % this.partSize] = x;
+      } else {
+        this.current[i - filledSize] = x;
+      }
+    },
+    setShort: function setShort(i, x) {
+      this.setByte(i, x >> 8);
+      this.setByte(i + 1, x & 255);
+    },
+    length: function length() {
+      return this.filled.length * this.partSize + this.index;
+    },
+    compress: function compress() {
+      var ret = new Uint8Array(this.length());
+      var filledSize = this.filled.length * this.partSize;
+      var i;
+      for(i=0; i<this.filled.length; i++) {
+        ret.set(this.filled[i], i * this.partSize);
+      }
+      for(i=0; i<this.index; i++) {
+        ret[filledSize + i] = this.current[i];
+      }
+      return ret;
+    }
   })
 
   init();
@@ -380,6 +439,8 @@ base.registerModule('util', function() {
     lineCircleIntersect: lineCircleIntersect,
     Viewport: Viewport,
     Camera: Camera,
-    FollowCamera: FollowCamera
+    FollowCamera: FollowCamera,
+    peek: peek,
+    ExtendableUint8Array: ExtendableUint8Array
   };
 });

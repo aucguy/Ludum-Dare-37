@@ -5,7 +5,10 @@ var base = base || {};
 
   base.indexFunc = function indexFunc(state) {
     var assets = [
-      ['image/test',          'assets/image/test.png',        'image']
+      ['image/test',          'assets/image/test.png',        'image'],
+      
+      ['state/story',         'assets/state/story.sbl',       'text'],
+      ['state/test',          'assets/state/test.sbl',         'text']
     ];
     //#mode dev
     base.loadAssets(assets.concat([
@@ -19,7 +22,16 @@ var base = base || {};
       ['scripts/main',        'src/bare/main.js',             'script'],
       ['scripts/gui',         'src/bare/gui.js',              'script'],
       ['scripts/util',        'src/bare/util.js',             'script'],
-      ['scripts/app',         'src/app.js',                   'script']
+      ['scripts/app',         'src/app.js',                   'script'],
+      
+      ['scripts/play',        'src/play.js',                   'script'],
+      ['scripts/sbl/lexer',   'src/sbl/lexer.js',              'script'],
+      ['scripts/sbl/parser',  'src/sbl/parser.js',             'script'],
+      ['scripts/sbl/compiler','src/sbl/compiler.js',           'script'],
+      ['scripts/sbl/interpreter','src/sbl/interpreter.js',     'script'],
+      ['scripts/sbl/common',  'src/sbl/common.js',             'script'],
+      ['scripts/sbl/lib',     'src/sbl/lib.js',                'script'],
+      ['scripts/sbl/sbl',     'src/sbl/sbl.js',                'script']
     ]));
     //#mode none
     //#mode rel
