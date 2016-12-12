@@ -204,7 +204,7 @@ base.registerModule('play', function() {
       this.direction = dir || direction.RIGHT;
       this.updateSprite();
     },
-    updateSprite: function() {
+    updateSprite: function updateSprite() {
       var tile = this.getTileAt(this.x, this.y)
       if(tile && tile.index == EXIT_TILE) {
         this.level.complete = true;
@@ -213,8 +213,8 @@ base.registerModule('play', function() {
       this.sprite.y = this.y * TILE_SIZE;
       this.sprite.frame = this.direction.frame;
     },
-    getTileAt(x, y) {
-      return this.level.field.map.tilemap.getTile(x, y, this.level.field.map.layer)
+    getTileAt: function getTileAt(x, y) {
+      return this.level.field.map.tilemap.getTile(x, y, this.level.field.map.layer);
     },
     fork: function fork(branch) {
       var sprite = this.level.game.add.sprite(this.sprite.x, this.sprite.y, 
