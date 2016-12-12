@@ -5,7 +5,6 @@ var base = base || {};
 
   base.indexFunc = function indexFunc(state) {
     var assets = [
-      ['image/test',          'assets/image/test.png',        'image'],
       ['image/tiles',         'assets/image/tiles.png',       'spritesheet', {
         frameWidth: 32,
         frameHeight: 32,
