@@ -1,0 +1,15 @@
+repeat 3:
+  forward
+
+fork:
+  left
+  repeat 6:
+    forward
+  left
+  repeat 3:
+    forward
+  right
+  forward
+
+repeat 2:
+  forward

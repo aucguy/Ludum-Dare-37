@@ -96,12 +96,14 @@ base.registerModule('sbl.common', function() {
     PUSH_REF: tmp++, //one arg: the reference to push
     PUSH_BLOCK: tmp++, //one args: the length
     CALL: tmp++, //one arg: the number of arguments
-    HALT: tmp++, //no args
+    END_BLOCK: tmp++, //no args
     LINE: tmp++, //one arg: the line number
   }
   
   function syntaxError(token, message) {
-    throw(new Error("Syntax Error at line " + token.line + ": " + message));
+    var error = new Error("Syntax Error at line " + token.line + ": " + message);
+    error.notInternal = true;
+    throw(error);
   }
   
   function addIfNotPresent(array, item) {

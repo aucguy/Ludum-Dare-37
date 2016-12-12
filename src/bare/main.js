@@ -24,10 +24,10 @@ base.registerModule('main', function() {
     },
     getPhaserConfig: function getPhaserConfig() {
       return {
-        width: 600,
+        width: 320,
         height: 400,
         canvasID: 'display',
-        parent: 'gameContainer',
+        parent: 'screen',
         renderer: Phaser.AUTO,
       };
     }
@@ -66,14 +66,15 @@ base.registerModule('main', function() {
         this.main.sounds[names[i]] = this.main.game.sound.add(names[i]);
       }
 
-      this.main.game.stage.backgroundColor = '#FFFFFF';
+      this.main.game.stage.backgroundColor = '#000000';
       var arrowKeys = [
         Phaser.KeyCode.LEFT,
         Phaser.KeyCode.RIGHT,
         Phaser.KeyCode.UP,
         Phaser.KeyCode.DOWN
       ];
-      base.addEventListener(window, "keydown", function(event) {
+      var elem = document.getElementById('display');
+      base.addEventListener(elem, "keydown", function(event) {
         if(arrowKeys.indexOf(event.keyCode) != -1) {
           event.preventDefault();
         }

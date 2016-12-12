@@ -21,6 +21,7 @@ base.registerModule('app', function() {
      * initialize the application
      */
     initApp: function initApp(main) {
+      document.getElementById('game').style.display = 'inline';
       main.game.state.start('play');
     }
   };

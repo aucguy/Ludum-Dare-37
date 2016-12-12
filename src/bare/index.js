@@ -6,9 +6,22 @@ var base = base || {};
   base.indexFunc = function indexFunc(state) {
     var assets = [
       ['image/test',          'assets/image/test.png',        'image'],
+      ['image/tiles',         'assets/image/tiles.png',       'spritesheet', {
+        frameWidth: 32,
+        frameHeight: 32,
+        pixelated: true
+      }],
+      ['image/turtle',        'assets/image/turtle.png',      'spritesheet', {
+        frameWidth: 32,
+        frameHeight: 32,
+        pixelated: true
+      }],
       
-      ['state/story',         'assets/state/story.sbl',       'text'],
-      ['state/test',          'assets/state/test.sbl',         'text']
+      ['program/level1',      'assets/program/level1.sbl',    'text'],
+      ['program/level2',      'assets/program/level2.sbl',    'text'],
+      
+      ['level/level1',        'assets/level/level1.json',     'tilemap'],
+      ['level/level2',        'assets/level/level2.json',     'tilemap']
     ];
     //#mode dev
     base.loadAssets(assets.concat([
@@ -46,6 +59,9 @@ var base = base || {};
     });
     logo.src = 'assets/image/logo.png';
   };
+  
+  base.displayId = "content";
+  
   base.renderLoadingScreen = function(canvasID, loading, loaded) {
     var display = document.getElementById(canvasID);
     if(display === null) return;

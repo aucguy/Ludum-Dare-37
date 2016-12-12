@@ -55,7 +55,7 @@ base.registerModule('util', function() {
     for (i=0; i<names.length; i++) { // copying new attributes
       name = names[i];
       value = sub[name];
-      if(value === null || value === undefined || !value.__factoryAttr) {
+      if(value === null || value === undefined || !value.__factoryAttr__) {
         proto[name] = value;
       } else if(value.__factoryAttr__) {
         value(proto, name);
@@ -161,6 +161,22 @@ base.registerModule('util', function() {
   function getTextureFromCache(game, key) {
     return PIXI.Texture.fromCanvas(game.cache.getCanvas(key));
   }
+  
+  function equals(x, y) {
+    if(x instanceof Array && y instanceof Array) {
+      if(x.length == y.length) {
+        for(var i=0; i<x.length; i++) {
+          if(!equals(x[i], y[i])) {
+            return false;
+          }
+        }
+        return true;
+      }
+      return false;
+    } else {
+      return x == y;
+    }
+  }
 
   var Map = extend(Object, 'Map', {
     constructor: function Map() {
@@ -168,7 +184,7 @@ base.registerModule('util', function() {
     },
     entry: function entry(key, make) {
       for(var i=0; i<this.entries.length; i++) {
-        if(this.entries[i].key == key) {
+        if(equals(this.entries[i].key, key)) {
           return this.entries[i];
         }
       }
@@ -432,6 +448,7 @@ base.registerModule('util', function() {
     ret: ret,
     addGenImg: addGenImg,
     getTextureFromCache: getTextureFromCache,
+    Map: Map,
     createBitmap: createBitmap,
     clearBitmapCache: clearBitmapCache,
     normalWithAngle: normalWithAngle,

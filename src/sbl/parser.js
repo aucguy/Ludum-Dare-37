@@ -77,10 +77,12 @@ base.registerModule('sbl.parser', function() {
           tos.token.addChild(item.token);
           stack.push(item);
         } else if(token.indent < tos.indent) {
-          if(stack.length == 1) {
-            throw(new Error("invalid indent (internal error)"));
+          while(token.indent < util.peek(stack).indent) {
+            if(stack.length == 1) {
+              common.syntaxError(token, "invalid indent (internal error)");
+            }
+            stack.pop();
           }
-          stack.pop();
         }
         lastColon = false;
       } else if(token.contents == COLON) { //throw away

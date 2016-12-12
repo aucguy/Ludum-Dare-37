@@ -14,11 +14,15 @@ base.registerModule('sbl.interpreter', function() {
       this.program = program;
       this.instruction = 0;
       this.stack = [];
+      this.blockStack = [];
       this.line = 0;
       this.dead = false;
       this.running = false;
     },
     run: function run() {
+      if(this.dead) {
+        return;
+      }
       this.running = true;
       var lastPush = null;
       var tmp;
@@ -65,8 +69,9 @@ base.registerModule('sbl.interpreter', function() {
             func.apply(null, args);
             //console.log('CALL ' + func);
             break;
-          case common.opcodes.HALT:
-            this.halt();
+          case common.opcodes.END_BLOCK:
+            this.blockStack.pop()();
+            //console.log('END_BLOCK');
           case common.opcodes.LINE:
             this.line = this.getShortArg();
             //console.log('LINE ' + this.line);
@@ -93,7 +98,12 @@ base.registerModule('sbl.interpreter', function() {
       return this.program.bytecode[this.instruction++] << 8 || this.program.bytecode[this.instruction++];
     },
     error: function(message) {
-      throw(new Error("Error at line " + this.line + ": " + message));
+      for(var i=0; i<this.program.branches.length; i++) {
+        this.program.branches[i].halt();
+      }
+      var error = new Error("Error at line " + this.line + ": " + message);
+      error.notInternal = true;
+      throw(error);
     }
   });
   
@@ -153,6 +163,8 @@ base.registerModule('sbl.interpreter', function() {
           console.log("PUSH_BLOCK " + (instruction - 2));
         } else if(instr == common.opcodes.CALL) {
           console.log("CALL " + this.bytecode[instruction++]);
+        } else if(instr == common.opcodes.END_BLOCK) {
+          console.log("END_BLOCK");
         } else if(instr == common.opcodes.LINE) {
           var index = this.bytecode[instruction++] << 8 || this.bytecode[instruction++];
           console.log("LINE " + index);

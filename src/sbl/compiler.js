@@ -27,7 +27,7 @@ base.registerModule('sbl.compiler', function() {
         var arg = bytecode.length();
         bytecode.appendShort(0); //a placeholder
         compileChildren(token, 0);
-        bytecode.appendByte(common.opcodes.HALT);
+        bytecode.appendByte(common.opcodes.END_BLOCK);
         bytecode.setShort(arg, bytecode.length());
       } else if(token.is$PrimToken) {
         if(token.type === common.PrimTypes.LITERAL || token.type === common.PrimTypes.NUMBER) {
