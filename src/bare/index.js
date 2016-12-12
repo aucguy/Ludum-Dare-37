@@ -19,9 +19,11 @@ var base = base || {};
       
       ['program/level1',      'assets/program/level1.sbl',    'text'],
       ['program/level2',      'assets/program/level2.sbl',    'text'],
+      ['program/level3',      'assets/program/level3.sbl',    'text'],
       
       ['level/level1',        'assets/level/level1.json',     'tilemap'],
-      ['level/level2',        'assets/level/level2.json',     'tilemap']
+      ['level/level2',        'assets/level/level2.json',     'tilemap'],
+      ['level/level3',        'assets/level/level3.json',     'tilemap']
     ];
     //#mode dev
     base.loadAssets(assets.concat([

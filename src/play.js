@@ -18,8 +18,8 @@ base.registerModule('play', function() {
       this.constructor$PlayContextual();
       this.level = null;
       this.running = false;
-      this.levelNo = 1;
-      this.unlocked = localStorage.getItem("unlockedLevels") || 2;
+      this.levelNo = 3;
+      this.unlocked = parseInt(localStorage.getItem("unlockedLevels")) || 3;
       this.nextMove = null;
     },
     create: function create() {
