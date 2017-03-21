@@ -17,7 +17,7 @@ module.exports = function(grunt) {
         src: ['lib/basejs/build/baseinjectors.min.js',
               'lib/canvg/canvg.min.js',
               'lib/javascript-state-machine/state-machine.min.js',
-              'lib/phaser/build/phaser.min.js',
+              'lib/phaser/v2/dist/phaser.min.js',
               'build/mainUglify.min.js'],
         dest: 'build/appConcat.min.js'
       },
@@ -109,5 +109,5 @@ module.exports = function(grunt) {
     'preprocess:entry',
     'copy:scripts',
     'copy:assets',
-    ]);
+  ]);
 };
