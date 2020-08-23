@@ -1,0 +1,13 @@
+.txt {
+  color: lime;
+  background-color: black;
+  overflow: hidden;
+  resize: none
+}
+
+.button {
+  color: lime;
+  background-color: black;
+  border: none;
+  padding: 5px 5px
+}
